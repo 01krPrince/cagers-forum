@@ -1,0 +1,237 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Main Container */
+.container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Enhanced shadow */
+    max-width: 800px;
+    width: 100%;
+    margin-top: 100px; /* Space for fixed header */
+    position: relative; /* Ensure child positioning works */
+    overflow: hidden; /* Keep content contained */
+}
+
+/* Hover Effect on Content Only */
+.form-container {
+    transition: transform 0.3s ease; /* Smooth animation */
+}
+
+.form-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Fixed Header */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #4e54c8;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    z-index: 1000; /* Ensure header stays on top */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Expandable Section */
+.expandable-section {
+    margin-bottom: 24px;
+    border: 1px solid #ccc;
+    border-radius: 12px; /* Increased rounding */
+    padding: 10px;
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Section Header */
+.expandable-section h2 {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.expandable-section h2:hover {
+    background-color: #e0e0e0;
+}
+
+.icon {
+    font-size: 1.5em;
+}
+
+/* Expand/Collapse Content */
+.content {
+    max-height: 0; /* Initially hidden */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out; /* Smooth animation */
+}
+
+.content.expanded {
+    max-height: 800px; /* Increased for more content */
+}
+
+/* Form Elements */
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 28px; /* Consistent spacing */
+    flex-wrap: wrap; /* Ensure form items wrap on smaller screens */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600; /* Slightly bolder labels */
+}
+
+/* Input and Select Styling */
+input, select, textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border 0.3s ease;
+    font-size: 1rem;
+}
+
+/* Input Focus State */
+input:focus, select:focus, textarea:focus {
+    border-color: #4e54c8;
+    outline: none;
+    box-shadow: 0 0 8px rgba(78, 84, 200, 0.5); /* Stronger glow effect on focus */
+}
+
+/* Inline Radio Button Styling */
+.inline-radio {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Ensure wrap on smaller screens */
+}
+
+.inline-radio label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.inline-radio input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* Button Container (Sticky at Bottom) */
+.button-container {
+    position: sticky; /* Keeps button visible */
+    bottom: 0;
+    background: white; /* Ensure button area is visible */
+    padding: 20px 0;
+    text-align: right; /* Aligns button to the right */
+    z-index: 10; /* Keeps it above other content */
+}
+
+/* Button Styling */
+.btn {
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s ease;
+}
+
+/* Button Hover Effect */
+.btn:hover {
+    background: linear-gradient(135deg, #3e44a8, #7a7fe5);
+    transform: scale(1.05); /* Button pop effect */
+}
+
+/* Button Focus State (Accessibility) */
+.btn:focus {
+    outline: 3px solid #8f94fb;
+    box-shadow: 0 0 8px rgba(78, 84, 200, 0.6);
+}
+
+/* Error Message */
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 28px;
+        margin-top: 120px; /* Adjusted for header */
+    }
+
+    h1 {
+        font-size: 1.8rem; /* Slightly smaller heading */
+    }
+
+    /* Button Adjustments for Mobile */
+    .button-container {
+        position: static; /* Inline flow for mobile */
+        text-align: center; /* Center button */
+        padding-top: 20px;
+    }
+
+    .btn {
+        width: 100%; /* Full-width button */
+    }
+
+    /* Inline Groups in Mobile */
+    .inline-radio {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem; /* Compact heading for small screens */
+    }
+
+    .expandable-section h2 {
+        font-size: 1rem; /* Smaller section headings */
+        padding: 10px;
+    }
+
+    input, select {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 12px 20px;
+    }
+}
