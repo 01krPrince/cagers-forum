@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 const Education = ({ formData, handleChange }) => {
   const [selectedBranch, setSelectedBranch] = useState(formData.branch || "");
   const [batchOptions, setBatchOptions] = useState([]);
-  const [showCustomCourse, setShowCustomCourse] = useState(false);
 
   // Update batch options when branch changes
   useEffect(() => {
