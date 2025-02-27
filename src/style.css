@@ -26,15 +26,6 @@ body {
     overflow: hidden; /* Keep content contained */
 }
 
-/* Hover Effect on Content Only */
-.form-container {
-    transition: transform 0.3s ease; /* Smooth animation */
-}
-
-.form-container:hover {
-    transform: translateY(-5px);
-}
-
 /* Fixed Header */
 .fixed-header {
     position: fixed;
@@ -112,7 +103,7 @@ label {
 
 /* Input and Select Styling */
 input, select, textarea {
-    width: 100%;
+    width: calc(100% - 20px); /* Adjust width to account for padding */
     padding: 14px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -189,12 +180,18 @@ input:focus, select:focus, textarea:focus {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 28px;
+        padding: 20px; /* Reduced padding for smaller screens */
         margin-top: 120px; /* Adjusted for header */
     }
 
     h1 {
-        font-size: 1.8rem; /* Slightly smaller heading */
+        font-size: 1.6rem; /* Smaller heading */
+    }
+
+    /* Form Group Adjustments */
+    .form-group {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: flex-start; /* Align items to the start */
     }
 
     /* Button Adjustments for Mobile */
@@ -217,7 +214,7 @@ input:focus, select:focus, textarea:focus {
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.5rem; /* Compact heading for small screens */
+        font-size: 1.4rem; /* Compact heading for small screens */
     }
 
     .expandable-section h2 {
@@ -227,11 +224,11 @@ input:focus, select:focus, textarea:focus {
 
     input, select {
         font-size: 0.9rem;
-        padding: 12px;
+        padding: 10px; /* Reduced padding */
     }
 
     .btn {
         font-size: 0.9rem;
-        padding: 12px 20px;
+        padding: 10px 20px; /* Reduced padding */
     }
 }

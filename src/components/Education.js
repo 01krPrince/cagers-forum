@@ -39,34 +39,6 @@ const Education = ({ formData, handleChange }) => {
 
   return (
     <div>
-      {/* Course Dropdown */}
-      <div className="form-group">
-        <label htmlFor="course">Course:</label>
-        <select
-          id="course"
-          name="course"
-          value={formData.course || ""}
-          onChange={handleCourseChange}
-          required
-        >
-          <option value="">Select Course</option>
-          {[
-            "C++",
-            "Java",
-            "Python",
-            "Data Structures",
-            "Web Development",
-            "App Development",
-            "Machine Learning",
-            "Other",
-          ].map((course) => (
-            <option key={course} value={course}>
-              {course}
-            </option>
-          ))}
-        </select>
-      </div>
-
       {/* Custom Course Input (if "Other" is selected) */}
       {showCustomCourse && (
         <div className="form-group">
