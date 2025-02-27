@@ -30,24 +30,13 @@ const Education = ({ formData, handleChange }) => {
     handleChange(e); // Update formData
   };
 
+  // Handle degree change
+  const handleDegreeChange = (e) => {
+    handleChange(e); // Update formData
+  };
+
   return (
     <div>
-      {/* Custom Course Input (if "Other" is selected) */}
-      {showCustomCourse && (
-        <div className="form-group">
-          <label htmlFor="customCourse">Enter Custom Course:</label>
-          <input
-            type="text"
-            id="customCourse"
-            name="customCourse"
-            value={formData.customCourse || ""}
-            onChange={handleChange}
-            placeholder="Enter your custom course"
-            required={showCustomCourse}
-          />
-        </div>
-      )}
-
       {/* Degree Dropdown */}
       <div className="form-group">
         <label htmlFor="degree">Degree:</label>
@@ -55,7 +44,7 @@ const Education = ({ formData, handleChange }) => {
           id="degree"
           name="degree"
           value={formData.degree || ""}
-          onChange={handleChange}
+          onChange={handleDegreeChange} // Use the new handler
           required
         >
           <option value="">Select Degree</option>
@@ -92,7 +81,7 @@ const Education = ({ formData, handleChange }) => {
               type="radio"
               name="branch"
               value="Kankarbagh"
-              checked={formData.branch === "Kankarbagh"}
+              checked={selectedBranch === "Kankarbagh"}
               onChange={handleBranchChange}
             />
             Kankarbagh
@@ -102,7 +91,7 @@ const Education = ({ formData, handleChange }) => {
               type="radio"
               name="branch"
               value="Boring Road"
-              checked={formData.branch === "Boring Road"}
+              checked={selectedBranch === "Boring Road"}
               onChange={handleBranchChange}
             />
             Boring Road
