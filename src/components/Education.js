@@ -31,12 +31,6 @@ const Education = ({ formData, handleChange }) => {
     handleChange(e); // Update formData
   };
 
-  // Handle course change to show "Other" input
-  const handleCourseChange = (e) => {
-    handleChange(e);
-    setShowCustomCourse(e.target.value === "Other");
-  };
-
   return (
     <div>
       {/* Custom Course Input (if "Other" is selected) */}
