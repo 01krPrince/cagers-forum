@@ -177,6 +177,25 @@ input:focus, select:focus, textarea:focus {
     margin-top: 4px;
 }
 
+/* toastStyles.css */
+.Toastify__toast--success {
+    background-color: #4caf50; /* Green */
+    color: white; /* Text color */
+    font-weight: bold; /* Bold text */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding */
+  }
+  
+  .Toastify__toast--error {
+    background-color: #f44336; /* Red */
+    color: white; /* Text color */
+    font-weight: bold; /* Bold text */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding */
+  }
+  
+  /* Add any additional styles you want */
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {

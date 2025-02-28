@@ -1,5 +1,23 @@
 import React, { useState, useEffect } from "react";
 
+const branchIdMap = {
+  Kankarbagh: "67b7023622eeac26b371bc7e",
+  "Boring Road": "67b7038822eeac26b371bc7f",
+};
+
+const batchIdMap = {
+  "Cage - K1": "67b7042e22eeac26b371bc80",
+  "Cage - K2": "67b7042e22eeac26b371bc81",
+  "Cage - K3": "67b7042e22eeac26b371bc82",
+  "Cage - K4": "67b7042e22eeac26b371bc83",
+  "Cage - K5": "67b7042e22eeac26b371bc84",
+  "Cage - K6": "67b7042e22eeac26b371bc85",
+  "Cage - K7": "67b7042e22eeac26b371bc86",
+  "Cage - B1": "67b7042e22eeac26b371bc91",
+  "Cage - B2": "67b7042e22eeac26b371bc92",
+  "Cage - B3": "67b7042e22eeac26b371bc83",
+};
+
 const Education = ({ formData, handleChange }) => {
   const [selectedBranch, setSelectedBranch] = useState(formData.branch || "");
   const [batchOptions, setBatchOptions] = useState([]);
@@ -27,12 +45,31 @@ const Education = ({ formData, handleChange }) => {
   const handleBranchChange = (e) => {
     const { value } = e.target;
     setSelectedBranch(value);
-    handleChange(e); // Update formData
+    const branchId = branchIdMap[value] || "";
+    handleChange({ target: { name: "branchId", value: branchId } });
+  };
+
+  // Handle batch change
+  const handleBatchChange = (e) => {
+    const { value } = e.target;
+    const batchId = batchIdMap[value] || "";
+    handleChange({ target: { name: "batchId", value: batchId } });
   };
 
   // Handle degree change
   const handleDegreeChange = (e) => {
-    handleChange(e); // Update formData
+    handleChange(e);
+  };
+
+  // Handle study mode (true for online, false for offline)
+  const handleStudyModeChange = (e) => {
+    const isOnline = e.target.value === "Online";
+    handleChange({ target: { name: "studyMode", value: isOnline } });
+  };
+
+  // Handle admission date
+  const handleAdmissionDateChange = (e) => {
+    handleChange(e);
   };
 
   return (
@@ -44,7 +81,7 @@ const Education = ({ formData, handleChange }) => {
           id="degree"
           name="degree"
           value={formData.degree || ""}
-          onChange={handleDegreeChange} // Use the new handler
+          onChange={handleDegreeChange}
           required
         >
           <option value="">Select Degree</option>
@@ -76,26 +113,18 @@ const Education = ({ formData, handleChange }) => {
       <div className="form-group">
         <label>Branch:</label>
         <div className="inline-radio-group">
-          <label>
-            <input
-              type="radio"
-              name="branch"
-              value="Kankarbagh"
-              checked={selectedBranch === "Kankarbagh"}
-              onChange={handleBranchChange}
-            />
-            Kankarbagh
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="branch"
-              value="Boring Road"
-              checked={selectedBranch === "Boring Road"}
-              onChange={handleBranchChange}
-            />
-            Boring Road
-          </label>
+          {["Kankarbagh", "Boring Road"].map((branch) => (
+            <label key={branch}>
+              <input
+                type="radio"
+                name="branch"
+                value={branch}
+                checked={selectedBranch === branch}
+                onChange={handleBranchChange}
+              />
+              {branch}
+            </label>
+          ))}
         </div>
       </div>
 
@@ -106,12 +135,12 @@ const Education = ({ formData, handleChange }) => {
           id="batchId"
           name="batchId"
           value={formData.batchId || ""}
-          onChange={handleChange}
+          onChange={handleBatchChange}
           required
         >
           <option value="">Select Batch</option>
-          {batchOptions.map((batch, index) => (
-            <option key={index} value={batch}>
+          {batchOptions.map((batch) => (
+            <option key={batch} value={batch}>
               {batch}
             </option>
           ))}
@@ -122,26 +151,20 @@ const Education = ({ formData, handleChange }) => {
       <div className="form-group">
         <label>Study Mode:</label>
         <div className="inline-radio-group">
-          <label>
-            <input
-              type="radio"
-              name="study_mode"
-              value="Online"
-              checked={formData.study_mode === "Online"}
-              onChange={handleChange}
-            />
-            Online
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="study_mode"
-              value="Offline"
-              checked={formData.study_mode === "Offline"}
-              onChange={handleChange}
-            />
-            Offline
-          </label>
+          {["Online", "Offline"].map((mode) => (
+            <label key={mode}>
+              <input
+                type="radio"
+                name="studyMode"
+                value={mode}
+                checked={
+                  formData.studyMode === (mode === "Online" ? true : false)
+                }
+                onChange={handleStudyModeChange}
+              />
+              {mode}
+            </label>
+          ))}
         </div>
       </div>
 
@@ -153,10 +176,17 @@ const Education = ({ formData, handleChange }) => {
           id="admissionDate"
           name="admissionDate"
           value={formData.admissionDate || ""}
-          onChange={handleChange}
+          onChange={handleAdmissionDateChange}
           required
         />
       </div>
+
+      {/* Error Handling */}
+      {formData.error && (
+        <div className="error-message">
+          <p>Error: {formData.error}</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,7 +4,21 @@ import PersonalInfo from './components/PersonalInfo';
 import Address from './components/Address';
 import Education from './components/Education';
 import Submit from './components/Submit';
+import { uploadImageToCloudinary, submitFormData } from './components/apiService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
+
+// Inside your App component's return statement
+<ToastContainer 
+  position="top-right" // Position of the toast
+  autoClose={5000} // Auto close after 5 seconds
+  hideProgressBar={false} // Show progress bar
+  closeOnClick
+  pauseOnHover
+  draggable
+  pauseOnFocusLoss
+/>
 
 const App = () => {
   const [formData, setFormData] = useState({
@@ -36,19 +50,27 @@ const App = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(formData); // For debugging
-    // Post the data to the API
     try {
-      const response = await fetch('https://batch-master-backend.onrender.com/api/v1/students/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-      console.log(result);
+      // Check if an image file is selected
+      if (formData.imgUrl instanceof File) {
+        // Upload the image to Cloudinary
+        const secureUrl = await uploadImageToCloudinary(formData.imgUrl);
+        // Update formData with the image URL
+        const updatedFormData = { ...formData, imgUrl: secureUrl };
+
+        // Submit the form data to the backend
+        const result = await submitFormData(updatedFormData);
+        if (result.responseStatus === "CREATED") {
+          toast.success("Registered successfully!"); // Show success message
+        } else {
+          toast.error("A student with this email already exists."); // Show error message
+        }
+        console.log(result);
+      } else {
+        toast.error("Please upload an image before submitting."); // Show error message
+      }
     } catch (error) {
+      toast.error(error.message); // Show error message
       console.error('Error:', error);
     }
   };
@@ -90,6 +112,7 @@ const App = () => {
         </div>
         <Submit handleSubmit={handleSubmit} />
       </div>
+      <ToastContainer /> {/* Add ToastContainer here */}
     </div>
   );
 };
