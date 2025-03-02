@@ -1,4 +1,3 @@
-/* General Styling */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -7,26 +6,24 @@ body {
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align items to the top */
+    align-items: flex-start;
     min-height: 100vh;
     box-sizing: border-box;
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    overflow-x: hidden;
 }
 
-/* Main Container */
 .container {
     background: #fff;
-    padding: 20px; /* Reduced padding for smaller screens */
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Enhanced shadow */
-    max-width: 90%; /* Set max-width to 90% for smaller screens */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    max-width: 90%;
     width: 100%;
-    margin-top: 100px; /* Space for fixed header */
-    position: relative; /* Ensure child positioning works */
-    overflow: hidden; /* Keep content contained */
+    margin-top: 100px;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Fixed Header */
 .fixed-header {
     position: fixed;
     top: 0;
@@ -36,7 +33,7 @@ body {
     color: white;
     padding: 20px 0;
     text-align: center;
-    z-index: 1000; /* Ensure header stays on top */
+    z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -45,16 +42,14 @@ h1 {
     font-size: 2rem;
 }
 
-/* Expandable Section */
 .expandable-section {
     margin-bottom: 24px;
     border: 1px solid #ccc;
-    border-radius: 12px; /* Increased rounding */
+    border-radius: 12px;
     padding: 10px;
     transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
-/* Section Header */
 .expandable-section h2 {
     cursor: pointer;
     display: flex;
@@ -76,34 +71,31 @@ h1 {
     font-size: 1.5em;
 }
 
-/* Expand/Collapse Content */
 .content {
-    max-height: 0; /* Initially hidden */
+    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-in-out; /* Smooth animation */
+    transition: max-height 0.4s ease-in-out;
 }
 
 .content.expanded {
-    max-height: 800px; /* Increased for more content */
+    max-height: 800px;
 }
 
-/* Form Elements */
 .form-group {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 28px; /* Consistent spacing */
-    flex-wrap: wrap; /* Ensure form items wrap on smaller screens */
+    margin-bottom: 28px;
+    flex-wrap: wrap;
 }
 
 label {
     display: block;
     margin-bottom: 10px;
-    font-weight: 600; /* Slightly bolder labels */
+    font-weight: 600;
 }
 
-/* Input and Select Styling */
 input, select, textarea {
-    width: calc(100% - 20px); /* Adjust width to account for padding */
+    width: calc(100% - 20px);
     padding: 14px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -112,18 +104,16 @@ input, select, textarea {
     font-size: 1rem;
 }
 
-/* Input Focus State */
 input:focus, select:focus, textarea:focus {
     border-color: #4e54c8;
     outline: none;
-    box-shadow: 0 0 8px rgba(78, 84, 200, 0.5); /* Stronger glow effect on focus */
+    box-shadow: 0 0 8px rgba(78, 84, 200, 0.5);
 }
 
-/* Inline Radio Button Styling */
 .inline-radio {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap; /* Ensure wrap on smaller screens */
+    flex-wrap: wrap;
 }
 
 .inline-radio label {
@@ -137,17 +127,15 @@ input:focus, select:focus, textarea:focus {
     cursor: pointer;
 }
 
-/* Button Container (Sticky at Bottom) */
 .button-container {
-    position: sticky; /* Keeps button visible */
+    position: sticky;
     bottom: 0;
-    background: white; /* Ensure button area is visible */
+    background: white;
     padding: 20px 0;
-    text-align: right; /* Aligns button to the right */
-    z-index: 10; /* Keeps it above other content */
+    text-align: right;
+    z-index: 10;
 }
 
-/* Button Styling */
 .btn {
     background: linear-gradient(135deg, #4e54c8, #8f94fb);
     color: white;
@@ -158,74 +146,65 @@ input:focus, select:focus, textarea:focus {
     transition: transform 0.3s, background 0.3s ease;
 }
 
-/* Button Hover Effect */
 .btn:hover {
     background: linear-gradient(135deg, #3e44a8, #7a7fe5);
-    transform: scale(1.05); /* Button pop effect */
+    transform: scale(1.05);
 }
 
-/* Button Focus State (Accessibility) */
 .btn:focus {
     outline: 3px solid #8f94fb;
     box-shadow: 0 0 8px rgba(78, 84, 200, 0.6);
 }
 
-/* Error Message */
 .error-message {
     color: red;
     font-size: 0.9rem;
     margin-top: 4px;
 }
 
-/* toastStyles.css */
 .Toastify__toast--success {
-    background-color: #4caf50; /* Green */
-    color: white; /* Text color */
-    font-weight: bold; /* Bold text */
-    border-radius: 8px; /* Rounded corners */
-    padding: 10px; /* Padding */
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
   }
   
   .Toastify__toast--error {
-    background-color: #f44336; /* Red */
-    color: white; /* Text color */
-    font-weight: bold; /* Bold text */
-    border-radius: 8px; /* Rounded corners */
-    padding: 10px; /* Padding */
+    background-color: #f44336;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
   }
-  
-  /* Add any additional styles you want */
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 20px; /* Reduced padding for smaller screens */
-        margin-top: 120px; /* Adjusted for header */
-        max-width: 95%; /* Allow more width on smaller screens */
+        padding: 20px;
+        margin-top: 120px;
+        max-width: 95%;
     }
 
     h1 {
-        font-size: 1.6rem; /* Smaller heading */
+        font-size: 1.6rem;
     }
 
-    /* Form Group Adjustments */
     .form-group {
-        flex-direction: column; /* Stack elements vertically */
-        align-items: flex-start; /* Align items to the start */
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    /* Button Adjustments for Mobile */
     .button-container {
-        position: static; /* Inline flow for mobile */
-        text-align: center; /* Center button */
+        position: static;
+        text-align: center;
         padding-top: 20px;
     }
 
     .btn {
-        width: 100%; /* Full-width button */
+        width: 100%;
     }
 
-    /* Inline Groups in Mobile */
     .inline-radio {
         flex-direction: column;
         align-items: flex-start;
@@ -234,21 +213,21 @@ input:focus, select:focus, textarea:focus {
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.4rem; /* Compact heading for small screens */
+        font-size: 1.4rem;
     }
 
     .expandable-section h2 {
-        font-size: 1rem; /* Smaller section headings */
+        font-size: 1rem;
         padding: 10px;
     }
 
     input, select {
         font-size: 0.9rem;
-        padding: 10px; /* Reduced padding */
+        padding: 10px;
     }
 
     .btn {
         font-size: 0.9rem;
-        padding: 10px 20px; /* Reduced padding */
+        padding: 10px 20px;
     }
 }

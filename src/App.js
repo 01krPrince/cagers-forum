@@ -1,77 +1,151 @@
-import React, { useState } from 'react';
-import Header from './components/Header';
-import PersonalInfo from './components/PersonalInfo';
-import Address from './components/Address';
-import Education from './components/Education';
-import Submit from './components/Submit';
-import { uploadImageToCloudinary, submitFormData } from './components/apiService';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './style.css';
-
-// Inside your App component's return statement
-<ToastContainer 
-  position="top-right" // Position of the toast
-  autoClose={5000} // Auto close after 5 seconds
-  hideProgressBar={false} // Show progress bar
-  closeOnClick
-  pauseOnHover
-  draggable
-  pauseOnFocusLoss
-/>
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import PersonalInfo from "./components/PersonalInfo";
+import Address from "./components/Address";
+import Education from "./components/Education";
+import Submit from "./components/Submit";
+import {
+  uploadImageToCloudinary,
+  submitFormData,
+  isUserExists,
+  changeStudentStatus
+} from "./components/apiService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./style.css";
 
 const App = () => {
+
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const response = await fetch('https://batch-master-backend.onrender.com/api/v1/subjects/getAllSubjects');
+        console.log("This is called to start the backend server😊")
+      } catch (error) {
+      }
+    };
+    fetchSubjects();
+  }, []);
+
   const [formData, setFormData] = useState({
-    studentName: '',
-    fatherName: '',
-    parentsPhoneNo: '',
-    mobileNumber: '',
-    email: '',
-    dob: '',
-    imgUrl: '',
-    street: '',
-    city: '',
-    district: '',
-    state: '',
-    postalCode: '',
-    degree: '',
-    course: '',
-    batchId: '',
-    branchId: '',
-    admissionDate: '',
-    studyMode: ''
+    studentName: "",
+    fatherName: "",
+    parentsPhoneNo: "",
+    mobileNumber: "",
+    email: "",
+    dob: "",
+    imgUrl: "",
+    address: {
+      street: "",
+      city: "",
+      district: "",
+      state: "",
+      postalCode: "",
+    },
+    degree: "",
+    course: "",
+    batchId: "",
+    branchId: "",
+    admissionDate: "",
+    studyMode: "",
   });
 
   const [expandedSection, setExpandedSection] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name.startsWith("address.")) {
+      const field = name.split(".")[1];
+      setFormData((prev) => ({
+        ...prev,
+        address: { ...prev.address, [field]: value },
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const requiredFields = [
+    "studentName",
+    "fatherName",
+    "parentsPhoneNo",
+    "mobileNumber",
+    "email",
+    "dob",
+    "address.street",
+    "address.city",
+    "address.district",
+    "address.state",
+    "address.postalCode",
+    "degree",
+    "course",
+    "batchId",
+    "branchId",
+    "admissionDate",
+    "studyMode",
+  ];
+
+  const getNestedValue = (obj, path) => {
+    return path.split(".").reduce((acc, key) => acc && acc[key], obj);
+  };
+
+  const validateForm = () => {
+    for (const field of requiredFields) {
+      const value = getNestedValue(formData, field);
+      if (!value || value.toString().trim() === "") {
+        toast.error(`Please enter ${field.replace(/([A-Z])/g, " $1").toLowerCase()}`);
+        return false;
+      }
+    }
+
+    if (formData.mobileNumber.length !== 10) {
+      toast.error("Please enter a valid Mobile Number");
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async () => {
-    try {
-      // Check if an image file is selected
-      if (formData.imgUrl instanceof File) {
-        // Upload the image to Cloudinary
-        const secureUrl = await uploadImageToCloudinary(formData.imgUrl);
-        // Update formData with the image URL
-        const updatedFormData = { ...formData, imgUrl: secureUrl };
+    if (isSubmitting || !validateForm()) return;
 
-        // Submit the form data to the backend
-        const result = await submitFormData(updatedFormData);
-        if (result.responseStatus === "CREATED") {
-          toast.success("Registered successfully!"); // Show success message
-        } else {
-          toast.error("A student with this email already exists."); // Show error message
+    setIsSubmitting(true);
+
+    try {
+      toast.info("Checking if the user exists...");
+      const existingStudent = await isUserExists(formData.email);
+
+      if (existingStudent) {
+        toast.error("Student with this email already exists!");
+        setIsSubmitting(false);
+        return;
+      }
+
+      let updatedFormData = { ...formData };
+
+      if (formData.imgUrl instanceof File) {
+        const secureUrl = await uploadImageToCloudinary(formData.imgUrl);
+        updatedFormData.imgUrl = secureUrl;
+      }
+
+      const result = await submitFormData(updatedFormData);
+
+      if (result.responseStatus === "CREATED") {
+        console.log(result)
+        if (result.studentId) {
+          await changeStudentStatus(result.studentId);
         }
-        console.log(result);
+        toast.success("Registered successfully!");
       } else {
-        toast.error("Please upload an image before submitting."); // Show error message
+        toast.error("Failed to register. Please try again.");
       }
     } catch (error) {
-      toast.error(error.message); // Show error message
-      console.error('Error:', error);
+      toast.error(`Error: ${error.message}`);
+      console.error("Submission error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,37 +156,40 @@ const App = () => {
   return (
     <div className="container">
       <Header />
+
       <div className="form-container">
         <div className="expandable-section">
-          <h2 onClick={() => toggleSection('personal')}>
-            Personal Information
-            <span className="icon">{expandedSection === 'personal' ? '-' : '+'}</span>
-          </h2>
-          {expandedSection === 'personal' && (
+          <h2 onClick={() => toggleSection("personal")}>Personal Information</h2>
+          {expandedSection === "personal" && (
             <PersonalInfo formData={formData} handleChange={handleChange} />
           )}
         </div>
+
         <div className="expandable-section">
-          <h2 onClick={() => toggleSection('address')}>
-            Address Details
-            <span className="icon">{expandedSection === 'address' ? '-' : '+'}</span>
-          </h2>
-          {expandedSection === 'address' && (
+          <h2 onClick={() => toggleSection("address")}>Address Details</h2>
+          {expandedSection === "address" && (
             <Address formData={formData} handleChange={handleChange} />
           )}
         </div>
+
         <div className="expandable-section">
-          <h2 onClick={() => toggleSection('education')}>
-            Education Details
-            <span className="icon">{expandedSection === 'education' ? '-' : '+'}</span>
-          </h2>
-          {expandedSection === 'education' && (
+          <h2 onClick={() => toggleSection("education")}>Education Details</h2>
+          {expandedSection === "education" && (
             <Education formData={formData} handleChange={handleChange} />
           )}
         </div>
-        <Submit handleSubmit={handleSubmit} />
+
+        <Submit handleSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </div>
-      <ToastContainer /> {/* Add ToastContainer here */}
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
     </div>
   );
 };

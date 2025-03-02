@@ -1,70 +1,98 @@
-// apiService.js
+import imageCompression from "browser-image-compression";
 
-import imageCompression from 'browser-image-compression';
-
-const cloudName = 'dickevacs'; // Your Cloudinary cloud name
-const apiUrl = 'https://batch-master-backend.onrender.com/api/v1/students/create';
+const cloudName = "dickevacs"; // Your Cloudinary cloud name
+const apiUrl = "https://batch-master-backend.onrender.com/api/v1/students/create";
+const apiIsUserExists = "https://batch-master-backend.onrender.com/api/v1/students/getStudentByEmailId?emailId=";
+const apiAssignBatch = "https://batch-master-backend.onrender.com/api/v1/students/assignStudentToBatch";
+const apiChangeStatus = "https://batch-master-backend.onrender.com/api/v1/students/changeStatus";
 
 export const uploadImageToCloudinary = async (file) => {
-  if (!file) {
-    throw new Error("No file selected for upload");
-  }
+  if (!file) return null;
 
-  // Compress the image
   const options = {
-    maxSizeMB: 0.4, // Maximum size in MB (400 KB)
-    maxWidthOrHeight: 1920, // Maximum width or height
+    maxSizeMB: 0.4, // Max size (400 KB)
+    maxWidthOrHeight: 1920, // Max dimensions
     useWebWorker: true, // Use web worker for better performance
   };
 
   try {
     const compressedFile = await imageCompression(file, options);
     const formDataCloudinary = new FormData();
-    formDataCloudinary.append('file', compressedFile);
-    formDataCloudinary.append('upload_preset', 'cagers-forum'); // Your upload preset
-    formDataCloudinary.append('folder', 'student_photos'); // Specify the folder name here
+    formDataCloudinary.append("file", compressedFile);
+    formDataCloudinary.append("upload_preset", "cagers-forum");
+    formDataCloudinary.append("folder", "student_photos");
 
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-      method: 'POST',
-      body: formDataCloudinary,
-    });
-
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formDataCloudinary,
+      }
+    );
     const data = await response.json();
-    if (data.secure_url) {
-        console.log(data.secure_url)
-      return data.secure_url; // Return the image URL
-    } else {
-      throw new Error("Error uploading image: " + JSON.stringify(data));
-    }
+    if (!response.ok) return null;
+    return data.secure_url;
   } catch (error) {
-    throw new Error("Error uploading image: " + error.message);
+    return null;
   }
 };
 
 
+const assignStudentToBatch = async (studentId, batchId) => {
+  if (!studentId || !batchId) return;
+  try {
+    const response = await fetch(`${apiAssignBatch}?studentId=${studentId}&batchId=${batchId}`, {
+      method: "POST",
+    });
+    if (!response.ok) return;
+    return await response.json();
+  } catch (error) {
+  }
+};
+
+export const changeStudentStatus = async (studentId) => {
+  if (!studentId) return;
+  try {
+    const response = await fetch(`${apiChangeStatus}?studentId=${studentId}`, {
+      method: "POST",
+    });
+    if (!response.ok) return;
+    return await response.json();
+  } catch (error) {
+  }
+};
+
 export const submitFormData = async (formData) => {
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-  
-      // Check for user already exists error
-      if (response.status === 400 && result.error && result.error.includes("already exists")) {
-        throw new Error("A student with this email already exists.");
-      }
-  
-      // Check for other errors
-      if (result.error) {
-        throw new Error(result.error);
-      }
-  
-      return result; // Return the result if no errors
-    } catch (error) {
-      throw new Error('Error submitting form data: ' + error.message);
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+    if (!response.ok) return null;
+    if (result.studentId && formData.batchId) {
+      await assignStudentToBatch(result.studentId, formData.batchId);
     }
-  };
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const isUserExists = async (email) => {
+  try {
+    const response = await fetch(`${apiIsUserExists}${encodeURIComponent(email)}`, {
+      method: "GET",
+    });
+
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+};
+

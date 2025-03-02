@@ -74,3 +74,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 npm install browser-image-compression
 npm install react-toastify
+
+npm install -g serve
+serve -s build
