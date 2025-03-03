@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await fetch('https://batch-master-backend.onrender.com/api/v1/subjects/getAllSubjects');
+        await fetch('https://batch-master-backend.onrender.com/api/v1/subjects/getAllSubjects');
         console.log("This is called to start the backend server😊")
       } catch (error) {
       }
