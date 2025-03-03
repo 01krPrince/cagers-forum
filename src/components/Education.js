@@ -65,6 +65,7 @@ const Education = ({ formData, handleChange }) => {
   };
 
   const handleStudyModeChange = (e) => {
+    console.log("Study mode: ",formData.studyMode)
     const isOnline = e.target.value === "Online";
     handleChange({ target: { name: "studyMode", value: isOnline } });
   };

@@ -43,7 +43,7 @@ const App = () => {
       postalCode: "",
     },
     degree: "",
-    course: "",
+    course: "Full Stack Development",
     batchId: "",
     branchId: "",
     admissionDate: "",
@@ -84,7 +84,6 @@ const App = () => {
     "batchId",
     "branchId",
     "admissionDate",
-    "studyMode",
   ];
 
   const getNestedValue = (obj, path) => {
@@ -104,6 +103,10 @@ const App = () => {
       toast.error("Please enter a valid Mobile Number");
       return false;
     }
+
+    // if (formData.studyMode != true || formData.studyMode != false) {
+    //   toast.error("Please check study mode");
+    // }
 
     return true;
   };
