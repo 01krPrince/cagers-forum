@@ -104,10 +104,6 @@ const App = () => {
       return false;
     }
 
-    // if (formData.studyMode != true || formData.studyMode != false) {
-    //   toast.error("Please check study mode");
-    // }
-
     return true;
   };
 

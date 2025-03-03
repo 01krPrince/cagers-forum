@@ -6,21 +6,21 @@ const branchIdMap = {
 };
 
 const batchIdMap = {
-  "Cage - K1": "67b7042e22eeac26b371bc80",
-  "Cage - K2": "67b7042e22eeac26b371bc81",
-  "Cage - K3": "67b7042e22eeac26b371bc82",
-  "Cage - K4": "67b7047122eeac26b371bc81",
-  "Cage - K5": "67b7049d22eeac26b371bc82",
-  "Cage - K6": "67b7042e22eeac26b371bc85",
-  "Cage - K7": "67b7074122eeac26b371bc83",
-  "Cage - B1": "67b7042e22eeac26b371bc91",
-  "Cage - B2": "67b7042e22eeac26b371bc92",
-  "Cage - B3": "67b7042e22eeac26b371bc93",
+  "Cage - K1": "67c52da5e05fe4125a7bef72",
+  "Cage - K2": "67c52dc4e05fe4125a7bef73",
+  "Cage - K3": "67c52dcae05fe4125a7bef74",
+  "Cage - K4": "67c52e10e05fe4125a7bef75",
+  "Cage - K6": "67c52e18e05fe4125a7bef76",
+  "Cage - K7": "67c52e23e05fe4125a7bef77",
+  "Cage - K8": "67c52e2ce05fe4125a7bef78",
+  "Cage - B1": "67c52e6ee05fe4125a7bef79",
+  "Cage - B2": "67c52e77e05fe4125a7bef7a",
+  "Cage - B3": "67c52f78e05fe4125a7bef7b",
 };
 
 const getBatchByBranch = (branch) => {
   return branch === "Kankarbagh"
-    ? ["Cage - K1", "Cage - K2", "Cage - K3", "Cage - K4", "Cage - K5", "Cage - K6", "Cage - K7"]
+    ? ["Cage - K1", "Cage - K2", "Cage - K3", "Cage - K4", "Cage - K6", "Cage - K7", "Cage - K8"]
     : branch === "Boring Road"
     ? ["Cage - B1", "Cage - B2", "Cage - B3"]
     : [];
