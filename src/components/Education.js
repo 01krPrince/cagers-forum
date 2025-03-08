@@ -13,6 +13,7 @@ const batchIdMap = {
   "Cage - K6": "67c52e18e05fe4125a7bef76",
   "Cage - K7": "67c52e23e05fe4125a7bef77",
   "Cage - K8": "67c52e2ce05fe4125a7bef78",
+  "Cage - K9": "67cc028e590bd8568dff09a0",
   "Cage - B1": "67c52e6ee05fe4125a7bef79",
   "Cage - B2": "67c52e77e05fe4125a7bef7a",
   "Cage - B3": "67c52f78e05fe4125a7bef7b",
@@ -20,7 +21,7 @@ const batchIdMap = {
 
 const getBatchByBranch = (branch) => {
   return branch === "Kankarbagh"
-    ? ["Cage - K1", "Cage - K2", "Cage - K3", "Cage - K4", "Cage - K6", "Cage - K7", "Cage - K8"]
+    ? ["Cage - K1", "Cage - K2", "Cage - K3", "Cage - K4", "Cage - K6", "Cage - K7", "Cage - K8", "Cage - K9"]
     : branch === "Boring Road"
     ? ["Cage - B1", "Cage - B2", "Cage - B3"]
     : [];
@@ -28,7 +29,7 @@ const getBatchByBranch = (branch) => {
 
 const degreeOptions = [
   "Class 1-5", "Class 6-10", "Matriculation", "Intermediate", "Diploma",
-  "B.Tech", "B.E", "B.Sc CS", "BA", "BCA", "BBA-IT", "M.Tech", "M.Sc CS", "MCA", "MBA-IT", "Other",
+  "B.Tech", "B.E", "B.Sc CS", "BA", "BCA", "BBA-IT", "B.Com", "M.Tech", "M.Sc CS", "MCA", "MBA-IT", "Other",
 ];
 
 const Education = ({ formData, handleChange }) => {
