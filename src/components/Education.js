@@ -13,17 +13,17 @@ const batchIdMap = {
   "Cage - K6": "67c52e18e05fe4125a7bef76",
   "Cage - K7": "67c52e23e05fe4125a7bef77",
   "Cage - K8": "67c52e2ce05fe4125a7bef78",
-  "Cage - K9": "67cc028e590bd8568dff09a0",
   "Cage - B1": "67c52e6ee05fe4125a7bef79",
   "Cage - B2": "67c52e77e05fe4125a7bef7a",
   "Cage - B3": "67c52f78e05fe4125a7bef7b",
+  "Cage - B4": "67cc028e590bd8568dff09a0",
 };
 
 const getBatchByBranch = (branch) => {
   return branch === "Kankarbagh"
-    ? ["Cage - K1", "Cage - K2", "Cage - K3", "Cage - K4", "Cage - K6", "Cage - K7", "Cage - K8", "Cage - K9"]
+    ? ["Cage - K1", "Cage - K2", "Cage - K3", "Cage - K4", "Cage - K6", "Cage - K7", "Cage - K8"]
     : branch === "Boring Road"
-    ? ["Cage - B1", "Cage - B2", "Cage - B3"]
+    ? ["Cage - B1", "Cage - B2", "Cage - B3", "Cage - B4"]
     : [];
 };
 
